@@ -1,13 +1,14 @@
 pam_multipass
 =============
 
-Allows users to login to unix services with multiple, service-specific
+Allows users to login to unix services with multiple, service-scoped
 passwords.
 
 * Passwords are hashed using bcrypt.
 * Adding or revoking a password does not require root access.
 * Requires no SQL database nor directory server.
-* A lightweight PAM module in C and a CLI in Python.
+* A lightweight PAM module in C.
+* A command-line config tool in Python.
 
 What pam_multipass is not:
 
@@ -15,7 +16,7 @@ What pam_multipass is not:
 * Not a password manager like [KeePass](http://keepass.info/).
 * Not for people who prefer GUIs.
 * Not tested on anything but GNU/Linux. (Shouldn't be hard to port).
-* Not designed for large companies.
+* Not enterprisey.
 
 Usage and Rationale
 -------------------
@@ -58,9 +59,9 @@ but feel make up your own.
     Confirm:
     teapot [all]: (hidden)
 
-I'd also like the password I saved on my phone to just work with email
+I'd also like the password I saved on my phone to only work with email
 and instant messaging, not with SSH.  Each password can be qualified
-with a list of PAM services:
+by a list of PAM services:
 
     $ multipass gen phone --services dovecot,jabber
     phone [dovecot,jabber]: knees roommate iced caused
@@ -136,7 +137,7 @@ Files
 
 Hashes of your passwords will be stored in `~/.multipass/hashes.json`.
 You can put a wordlist for the passphrase generator in
-~/.multipass/words`.  It will use `/usr/share/dict/words`
+`~/.multipass/words`.  It will use `/usr/share/dict/words`
 otherwise.
 
 License
@@ -148,6 +149,3 @@ pam_multipass itself is under a 2-clause BSD style license.  See
 The C module includes parts of the public domain Openwall
 [crypt_blowfish 1.2](http://www.openwall.com/crypt/) by Solar
 Designer.  See [crypt_blowfish.c].
-
-The Python CLI requires [py-bcrypt](https://code.google.com/p/py-bcrypt/)
-Damien Miller's Python wrapper of Niels Provos's OpenBSD bcrypt.
